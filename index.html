@@ -100,7 +100,7 @@ var camera =
     y:        800., // y position on the map
     height:    78., // height of the camera
     angle:      0., // direction of the camera
-    horizon:  100., // horizon position (look up and down)
+    horizon:  50., // horizon position (look up and down)
     distance: 800   // distance of map
 };
 
@@ -168,8 +168,8 @@ function UpdateCamera()
     }
     if (input.forwardbackward != 0)
     {
-        camera.x -= input.forwardbackward * Math.sin(camera.angle) * (current-time)*0.03;
-        camera.y -= input.forwardbackward * Math.cos(camera.angle) * (current-time)*0.03;
+        camera.x -= input.forwardbackward * Math.sin(camera.angle) * (current-time)*0.005;
+        camera.y -= input.forwardbackward * Math.cos(camera.angle) * (current-time)*0.005;
         input.keypressed = true;
     }
     if (input.updown != 0)
@@ -190,7 +190,9 @@ function UpdateCamera()
 
     // Collision detection. Don't fly below the surface.
     var mapoffset = ((Math.floor(camera.y) & (map.width-1)) << map.shift) + (Math.floor(camera.x) & (map.height-1))|0;
-    if ((map.altitude[mapoffset]+10) > camera.height) camera.height = map.altitude[mapoffset] + 10;
+    // if ((map.altitude[mapoffset]+10) > camera.height) camera.height = map.altitude[mapoffset] + 10;
+
+    camera.height = map.altitude[mapoffset] + 20;
 
     time = current;
 
@@ -261,11 +263,11 @@ function DetectKeysDown(e)
         break;
     case 38:    // cursor up
     case 87:    // w
-        input.forwardbackward = 3.;
+        input.forwardbackward = 1.;
         break;
     case 40:    // cursor down
     case 83:    // s
-        input.forwardbackward = -3.;
+        input.forwardbackward = -1.;
         break;
     case 82:    // r
         input.updown = +2.;
