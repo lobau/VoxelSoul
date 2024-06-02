@@ -1,65 +1,55 @@
-<html>
-    <head>
-        <title>Voxel Test</title>
-        <style media="screen">
-            * {
-                padding: 0;
-                margin: 0;
-                box-sizing: border-box;
-                border: none;
-            }
-            html{
-                background-color: black;
-                color: white;
-            }
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US" prefix="og: http://ogp.me/ns#">
 
-            #debugCanvas {
-                position: absolute;
-                top: 20px;
-                left: 20px;
-                width: 100px;
-                height: 100px;
-            }
-        </style>
-    </head>
-    <body>
-        <!-- To load our images into memory -->
-        <canvas style="display: none" id="colorHolderCanvas"></canvas>
-        <canvas style="display: none" id="heightHolderCanvas"></canvas>
-        <!-- <br/><br/> -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <!-- Play area: (WASD to move, E/C to rise/fall)<br/> -->
-        <canvas id="playCanvas"></canvas>
-        <!-- <br/> -->
+    <title>Voxel Test</title>
+    <style media="screen">
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            border: none;
+            image-rendering: pixelated;
+        }
 
-        <!-- View Distance:<div id="viewDistanceDisplay"></div>
-        <input type="range" min="1" max="2000" value="1000" class="slider" id="viewDistance">
-        <br/> -->
+        html {
+            background-color: black;
+            color: white;
+        }
 
-        <!-- Field of View:<div id="viewFieldOfView"></div>
-        <input type="range" min="1" max="180" value="0" class="slider" id="fieldOfView">
-        <br/> -->
+        /* canvas {
+            display: block;
+        } */
 
-        View Pitch:<div id="horizonDisplay"></div>
-        <input type="range" min="0" max="0" value="0" class="slider" id="horizon">
-        <br/>
+        #playCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
 
-        Top-Down View (Click to teleport): <br/>
-        <canvas id="debugCanvas"></canvas>
-        <br/><br/>
+        #debugCanvas {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
 
-        <!-- Scale:<div id="scaleDisplay"></div>
-        <input type="range" min="1" max="1000" value="300" class="slider" id="scale">
-        <br/> -->
-<!-- 
+<body>
+    <!-- To load our images into memory -->
+    <canvas style="display: none" id="colorHolderCanvas"></canvas>
+    <canvas style="display: none" id="heightHolderCanvas"></canvas>
 
-        <button id="debugSegmentsOn">Debug Segments On</button>(Show the lines of pixels we're rendering)<br/>
-        <button id="debugSegmentsOff">Debug Segments Off</button>(Don't show them)<br/>
-        <br/><br/>
-        <button id="lodFalloffOn">LOD falloff On</button>(Draw fewer lines of pixels the further away the camera is)<br/>
-        <button id="lodFalloffOff">LOD falloff Off</button>(Render all rows, slower)<br/> -->
+    <!-- Play area: (WASD to move, E/C to rise/fall, R/V to tilt up and down) -->
+    <canvas id="playCanvas"></canvas>
+    <canvas id="debugCanvas"></canvas>
+</body>
+<script type="text/javascript" src="voxel.js?v=1"></script>
 
-
-    </body>
-    <script type="text/javascript" src="voxel.js?v=1"></script>
 </html>
