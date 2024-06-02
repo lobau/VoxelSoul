@@ -116,12 +116,14 @@
         }
 
         var camera = {
-            x: 512., // x position on the map
-            y: 800., // y position on the map
-            height: 78., // height of the camera
-            angle: 0., // direction of the camera
-            horizon: 50., // horizon position (look up and down)
-            distance: 800 // distance of map
+            x: 512.,
+            y: 800.,
+            // px: 512 + Math.cos(0) * 30,
+	        // py: 800 + Math.sin(0) * 30,
+            height: 78.,
+            angle: 0.,
+            horizon: 50.,
+            distance: 800,
         };
 
         // ---------------------------------------------
@@ -199,11 +201,14 @@
                 input.keypressed = true;
             }
 
+            camera.px = camera.x + Math.cos(camera.angle) * 10;
+	        camera.py = camera.y + Math.sin(camera.angle) * 10;
+
             // Collision detection. Don't fly below the surface.
             var mapoffset = ((Math.floor(camera.y) & (map.width - 1)) << map.shift) + (Math.floor(camera.x) & (map.height - 1)) | 0;
-            // if ((map.altitude[mapoffset]+10) > camera.height) camera.height = map.altitude[mapoffset] + 10;
+            if ((map.altitude[mapoffset]+10) > camera.height) camera.height = map.altitude[mapoffset] + 10;
 
-            camera.height = map.altitude[mapoffset] + 20;
+            // camera.height = map.altitude[mapoffset] + 20;
 
             time = current;
 
@@ -396,8 +401,20 @@
 
                 var dx = (prx - plx) / screenwidth;
                 var dy = (pry - ply) / screenwidth;
-                plx += camera.x;
-                ply += camera.y;
+
+                // var tgtx = camera.x - cosang * 2;
+	            // var tgty = camera.y - sinang * 2;
+
+                // plx += camera.x;
+                // ply += camera.y;
+
+                plx += camera.px;
+                ply += camera.py;
+
+                // plx += tgtx;
+                // ply += tgty;
+
+
                 var invz = 1. / z * 240.;
                 for (var i = 0; i < screenwidth | 0; i = i + 1 | 0) {
                     var mapoffset = ((Math.floor(ply) & mapwidthperiod) << map.shift) + (Math.floor(plx) & mapheightperiod) | 0;

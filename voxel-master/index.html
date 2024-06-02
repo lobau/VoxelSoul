@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <title>Voxel Test</title>
+        <style media="screen">
+            * {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+                border: none;
+            }
+            html{
+                background-color: black;
+                color: white;
+            }
+
+            #debugCanvas {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                width: 100px;
+                height: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- To load our images into memory -->
+        <canvas style="display: none" id="colorHolderCanvas"></canvas>
+        <canvas style="display: none" id="heightHolderCanvas"></canvas>
+        <!-- <br/><br/> -->
+
+        <!-- Play area: (WASD to move, E/C to rise/fall)<br/> -->
+        <canvas id="playCanvas"></canvas>
+        <!-- <br/> -->
+
+        <!-- View Distance:<div id="viewDistanceDisplay"></div>
+        <input type="range" min="1" max="2000" value="1000" class="slider" id="viewDistance">
+        <br/> -->
+
+        <!-- Field of View:<div id="viewFieldOfView"></div>
+        <input type="range" min="1" max="180" value="0" class="slider" id="fieldOfView">
+        <br/> -->
+
+        View Pitch:<div id="horizonDisplay"></div>
+        <input type="range" min="0" max="0" value="0" class="slider" id="horizon">
+        <br/>
+
+        Top-Down View (Click to teleport): <br/>
+        <canvas id="debugCanvas"></canvas>
+        <br/><br/>
+
+        <!-- Scale:<div id="scaleDisplay"></div>
+        <input type="range" min="1" max="1000" value="300" class="slider" id="scale">
+        <br/> -->
+<!-- 
+
+        <button id="debugSegmentsOn">Debug Segments On</button>(Show the lines of pixels we're rendering)<br/>
+        <button id="debugSegmentsOff">Debug Segments Off</button>(Don't show them)<br/>
+        <br/><br/>
+        <button id="lodFalloffOn">LOD falloff On</button>(Draw fewer lines of pixels the further away the camera is)<br/>
+        <button id="lodFalloffOff">LOD falloff Off</button>(Render all rows, slower)<br/> -->
+
+
+    </body>
+    <script type="text/javascript" src="voxel.js?v=1"></script>
+</html>
