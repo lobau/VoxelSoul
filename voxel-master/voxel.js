@@ -5,7 +5,7 @@ var ticksPerSecond = 60;
 var debug = true;
 var debugSegments = true;
 var lodFalloff = true;
-var falloffStepAmount = 0.025;
+var falloffStepAmount = 0.005;
 var enableFade = true;
 
 var worldWidth = 0;
@@ -24,7 +24,7 @@ var heightImageData = null;
 var frameImageData = null;
 
 var playView = {
-    canvasWidth: 640,
+    canvasWidth: 800,
     canvasHeight: 480,
     context: null,
     canvasElement: null,
@@ -47,8 +47,8 @@ var debugView = {
 var camera = {
     sky: {
         color: {
-            r: 255,
-            g: 255,
+            r: 180,
+            g: 180,
             b: 255
         }
     },
@@ -94,30 +94,30 @@ var world = {
 
 var allViews = [playView, debugView];
 
-function getPixelRatio(context) {
-  dpr = window.devicePixelRatio || 1,
-    bsr = context.webkitBackingStorePixelRatio ||
-    context.mozBackingStorePixelRatio ||
-    context.msBackingStorePixelRatio ||
-    context.oBackingStorePixelRatio ||
-    context.backingStorePixelRatio || 1;
-    console.log
-    return dpr / bsr;
-}
+// function getPixelRatio(context) {
+//   dpr = window.devicePixelRatio || 1,
+//     bsr = context.webkitBackingStorePixelRatio ||
+//     context.mozBackingStorePixelRatio ||
+//     context.msBackingStorePixelRatio ||
+//     context.oBackingStorePixelRatio ||
+//     context.backingStorePixelRatio || 1;
+//     console.log
+//     return dpr / bsr;
+// }
 
 
-function rescale(view) {
-    console.log(view.pixelRatio)
-  var width = view.initialWidth * view.pixelRatio;
-  var height = view.initialHeight * view.pixelRatio;
-  console.log(width, height);
-  if (width != view.context.canvas.width)
-    view.context.canvas.width = width;
-  if (height != view.context.canvas.height)
-    view.context.canvas.height = height;
-
-  view.context.setTransform(view.pixelRatio, 0, 0, view.pixelRatio, 0, 0);
-}
+// function rescale(view) {
+//     console.log(view.pixelRatio)
+//   var width = view.initialWidth * view.pixelRatio;
+//   var height = view.initialHeight * view.pixelRatio;
+//   console.log(width, height);
+//   if (width != view.context.canvas.width)
+//     view.context.canvas.width = width;
+//   if (height != view.context.canvas.height)
+//     view.context.canvas.height = height;
+//
+//   view.context.setTransform(view.pixelRatio, 0, 0, view.pixelRatio, 0, 0);
+// }
 
 function getSharpPixel(view, thickness, pos) {
   if (thickness % 2 == 0) {
@@ -272,12 +272,12 @@ function renderPlayView(){
     frameImageData = playView.context.createImageData(playView.canvasWidth, playView.canvasHeight);
 
     // paint the sky
-    // for(var i=0; i<= frameImageData.data.length; i+=4){
-    //     frameImageData.data[i] = camera.sky.color.r;
-    //     frameImageData.data[i+1] = camera.sky.color.g;
-    //     frameImageData.data[i+2] = camera.sky.color.b;
-    //     frameImageData.data[i+3] = 255;
-    // }
+    for(var i=0; i<= frameImageData.data.length; i+=4){
+        frameImageData.data[i] = camera.sky.color.r;
+        frameImageData.data[i+1] = camera.sky.color.g;
+        frameImageData.data[i+2] = camera.sky.color.b;
+        frameImageData.data[i+3] = 255;
+    }
 
     var percentFromBackToFade = 0.50;
     var layersFromBackToFade = camera.viewdistance * percentFromBackToFade;
@@ -510,9 +510,9 @@ function getColorAt(x,y){
 function fade(color,amount){
     // "Fade" by arbitrarily adding the same namber to r/g/b, which adds white and makes it brighter
     return [
-        color[0] - amount,
-        color[1] - amount,
-        color[2] - amount,
+        color[0] + amount,
+        color[1] + amount,
+        color[2] + amount,
         color[3]
     ];
 };
