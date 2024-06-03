@@ -1,5 +1,23 @@
 "use strict";
 
+class Player {
+    constructor(x, y, angle) {
+        this.x = x;
+        this.y = y;
+        this.angle = angle;
+    }
+
+    update(input, timeDelta, map) {
+        if (input.leftright !== 0) {
+            this.angle += input.leftright * 0.1 * timeDelta * 0.01;
+        }
+        if (input.forwardbackward !== 0) {
+            this.x -= input.forwardbackward * Math.sin(this.angle) * timeDelta * 0.05;
+            this.y -= input.forwardbackward * Math.cos(this.angle) * timeDelta * 0.05;
+        }
+    }
+}
+
 class Camera {
     constructor(x, y, height, angle, horizon, distance) {
         this.x = x;
@@ -11,13 +29,13 @@ class Camera {
     }
 
     update(input, timeDelta, map) {
-        if (input.leftright !== 0) {
-            this.angle += input.leftright * 0.1 * timeDelta * 0.03;
-        }
-        if (input.forwardbackward !== 0) {
-            this.x -= input.forwardbackward * Math.sin(this.angle) * timeDelta * 0.05;
-            this.y -= input.forwardbackward * Math.cos(this.angle) * timeDelta * 0.05;
-        }
+        // if (input.leftright !== 0) {
+        //     this.angle += input.leftright * 0.1 * timeDelta * 0.03;
+        // }
+        // if (input.forwardbackward !== 0) {
+        //     this.x -= input.forwardbackward * Math.sin(this.angle) * timeDelta * 0.05;
+        //     this.y -= input.forwardbackward * Math.cos(this.angle) * timeDelta * 0.05;
+        // }
         if (input.updown !== 0) {
             this.height += input.updown * timeDelta * 0.03;
         }
@@ -81,8 +99,14 @@ class ScreenData {
         this.context.putImageData(this.imageData, 0, 0);
     }
 
-    render(camera, map) {
+    render(camera, player, map) {
         const screenWidth = this.canvas.width | 0;
+
+        camera.x = player.x + Math.cos(player.angle) * 30;
+        camera.y = player.y + Math.sin(player.angle) * 30;
+        camera.angle = Math.PI / 2 - player.angle;
+
+
         const sinAngle = Math.sin(camera.angle);
         const cosAngle = Math.cos(camera.angle);
 
@@ -140,7 +164,8 @@ class Input {
 
 class Viewer {
     constructor() {
-        this.camera = new Camera(512, 800, 78, 0, 50, 800);
+        this.player = new Player(300, 800, 0);
+        this.camera = new Camera(350, 800, 78, 0, 50, 800);
         this.map = new Map(1024, 1024, 10);
         this.screenData = new ScreenData();
         this.input = new Input();
@@ -156,6 +181,7 @@ class Viewer {
         const timeDelta = currentTime - this.time;
 
         this.camera.update(this.input, timeDelta, this.map);
+        this.player.update(this.input, timeDelta, this.map);
         this.time = currentTime;
     }
 
@@ -163,7 +189,7 @@ class Viewer {
         this.updateRunning = true;
         this.updateCamera();
         this.screenData.drawBackground();
-        this.screenData.render(this.camera, this.map);
+        this.screenData.render(this.camera, this.player, this.map);
         this.screenData.flip();
         this.frames++;
 
