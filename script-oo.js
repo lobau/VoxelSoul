@@ -1,4 +1,4 @@
-// "use strict";
+"use strict";
 
 class Camera {
     constructor(x, y, height, angle, horizon, distance) {
